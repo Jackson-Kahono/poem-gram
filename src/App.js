@@ -41,6 +41,7 @@ function App() {
           setCollection(...collection, poem);
         }
   }
+}
 
   useEffect(() => {
     if (!user) {
