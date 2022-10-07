@@ -16,17 +16,13 @@ function App() {
   console.log(user)
 
   const fetchLiked = () => {
-    fetch("https://calm-journey-09295.herokuapp.com/users")
+    fetch(`https://calm-journey-09256.herokuapp.com/users/${user}`)
       .then(res => res.json())
       .then(data => {
-        let likes = data.filter((item) => item.id === user);
-        //get poems where id is in likes
-        for (let i = 0; i < likes.length; i++) {
-          let poem = poems.filter((item) => item.id === likes[i].poem_id);
-          setLiked(...liked, poem);
-        }
-
-
+        data.liked.map((item) => {
+          let likedPoems = poems.filter((poem) => poem.id === item)
+          setLiked(...liked, likedPoems)
+        })
       })
   }
 
@@ -73,6 +69,7 @@ function App() {
 
   }, [user]);
 
+  console.log(liked)
   function addToCollection(id) {
     //patch to user where user = user
     //add title to collection
