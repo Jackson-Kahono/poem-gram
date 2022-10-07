@@ -5,7 +5,7 @@ import { AiFillHeart } from 'react-icons/ai';
 function Likee({ addToCollection, addToLiked, id,liked }) {
       return (
             <>
-                  <div class='likes'>
+                  <div className='likes'>
                         <AiFillFileAdd
                               style={{ color: '#0b489c', fontSize: '2rem', cursor: 'pointer' }}
                               onClick={() => addToCollection(id)}

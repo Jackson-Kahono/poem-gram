@@ -6,37 +6,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [poems, setPoems] = useState([]);
-  const [liked, setLiked] = useState([]);
+  // const [liked, setLiked] = useState([]);
   const[likes,setLikes]=useState([]);
-  const [collection, setCollection] = useState([]);
+  // const [collection, setCollection] = useState([]);
 
   const [user, setUser] = useState(localStorage.getItem('uusr') || null);
-
-
-
-  console.log(user)
-
-  const fetchLiked = () => {
-    fetch(`https://calm-journey-09256.herokuapp.com/users/${user}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setLikes([...data.liked])
-      })
-  }
-
-  const fetchCollection = () => {
-    fetch("https://calm-journey-09295.herokuapp.com/users")
-      .then(res => res.json())
-      .then(data => {
-        let collections = data.filter((item) => item.id === user);
-        //get poems where id is in likes
-        for (let i = 0; i < collections.length; i++) {
-          let poem = poems.filter((item) => item.id === collections[i].poem_id);
-          setCollection(...collection, poem);
-        }
-  })
-}
 
   useEffect(() => {
     if (!user) {
@@ -62,13 +36,11 @@ function App() {
       .then((data) => {
         setPoems(data);
       });
-      fetchLiked()
-      fetchCollection()
+      // fetchLiked()
+      // fetchCollection()
 
 
-  }, []);
-
-  console.log(liked)
+  }, [user]);
   function addToCollection(id) {
     //patch to user where user = user
     //add title to collection
@@ -78,7 +50,7 @@ function App() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        collection:[...collection,id]
+        collection:[id]
       })
     })
 
