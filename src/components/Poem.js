@@ -3,6 +3,7 @@ import { AiFillHeart } from 'react-icons/ai';
 
 
 function Likee({ addToCollection, addToLiked, id,liked }) {
+      console.log(liked)
       return (
             <>
                   <div className='likes'>
@@ -26,7 +27,7 @@ function Likee({ addToCollection, addToLiked, id,liked }) {
       )
 }
 
-function Poem({ poem, addToCollection, addToLiked,view=false }) {
+function Poem({ poem, addToCollection, addToLiked,view=false ,liked}) {
       if (typeof poem.content !== "string") {
             return
       }
@@ -45,7 +46,7 @@ function Poem({ poem, addToCollection, addToLiked,view=false }) {
                               style={{ fontStyle: 'italic', color: '#f1356d' }}
                         >By {poem.poet.name}</span>
                   </div>
-                  {!view ? <Likee addToCollection={addToCollection} addToLiked={addToLiked} id={poem.id} liked={poem.liked} /> : null}
+                  {!view ? <Likee addToCollection={addToCollection} addToLiked={addToLiked} id={poem.id} liked={liked}/> : null}
             </div>
 
 

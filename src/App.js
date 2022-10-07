@@ -6,9 +6,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [poems, setPoems] = useState([]);
-  // const [liked, setLiked] = useState([]);
+
   const[likes,setLikes]=useState([]);
-  // const [collection, setCollection] = useState([]);
 
   const [user, setUser] = useState(localStorage.getItem('uusr') || null);
 
@@ -82,7 +81,7 @@ function App() {
           <Route path="/personal" element={<h1>personal</h1>} />
           <Route path="/liked" element={<h1>liked</h1>} />
           <Route path="/create" element={<h1>create</h1>} />
-          <Route path="/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} />} />
+          <Route path="/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes}/>} />
         </Routes>
       </BrowserRouter>
     </div>
