@@ -31,10 +31,10 @@ function App() {
   }
 
   const fetchCollection = () => {
-    fetch("https://calm-journey-09295.herokuapp.com/collections")
+    fetch("https://calm-journey-09295.herokuapp.com/users")
       .then(res => res.json())
       .then(data => {
-        let collections = data.filter((item) => item.user_id === user);
+        let collections = data.filter((item) => item.id === user);
         //get poems where id is in likes
         for (let i = 0; i < collections.length; i++) {
           let poem = poems.filter((item) => item.id === collections[i].poem_id);
