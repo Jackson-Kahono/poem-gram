@@ -9,7 +9,7 @@ function App() {
   const [liked, setLiked] = useState([]);
   const [collection, setCollection] = useState([]);
 
-  const [user, setUser] = useState(localStorage.getItem('useer') || null);
+  const [user, setUser] = useState(localStorage.getItem('uusr') || null);
 
 
 
@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
     if (!user) {
       let usr = Date.now();
-      localStorage.setItem('useer', usr);
+      localStorage.setItem('uusr', usr);
       fetch("https://calm-journey-09295.herokuapp.com/users", {
         method: "POST",
         headers: {
@@ -64,7 +64,7 @@ function App() {
       fetchCollection()
 
 
-  }, [user]);
+  }, []);
 
   console.log(liked)
   function addToCollection(id) {

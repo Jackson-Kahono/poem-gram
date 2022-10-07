@@ -45,7 +45,7 @@ function Poem({ poem, addToCollection, addToLiked,view=false }) {
                               style={{ fontStyle: 'italic', color: '#f1356d' }}
                         >By {poem.poet.name}</span>
                   </div>
-                  {!view ? <Likee addToCollection={addToCollection} addToLiked={addToLiked} title={poem.title} liked={poem.liked} /> : null}
+                  {!view ? <Likee addToCollection={addToCollection} addToLiked={addToLiked} id={poem.id} liked={poem.liked} /> : null}
             </div>
 
 
