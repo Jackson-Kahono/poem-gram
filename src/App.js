@@ -30,6 +30,9 @@ function App() {
       })
   }
 
+  const fetchCollection = () => {
+  }
+
   useEffect(() => {
     if (!user) {
       let usr = Date.now();
