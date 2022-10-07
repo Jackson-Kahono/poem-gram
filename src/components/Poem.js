@@ -3,7 +3,6 @@ import { AiFillHeart } from 'react-icons/ai';
 
 
 function Likee({ addToCollection, addToLiked, id,liked }) {
-      console.log(liked)
       return (
             <>
                   <div className='likes'>

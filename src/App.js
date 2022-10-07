@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import Nav from "./components/Nav";
 import Home from './components/Home';
+import Create from './components/Create';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -9,12 +10,19 @@ function App() {
 
   const[likes,setLikes]=useState([]);
 
-  const [user, setUser] = useState(localStorage.getItem('uusr') || null);
 
+  const [user, setUser] = useState(localStorage.getItem('fuser') || null);
+
+  const fetchLikes = async () => {
+    const res = await fetch('https://calm-journey-09295.herokuapp.com/users');
+    const data = await res.json();
+    setLikes([...data.liked]);
+  }
+  fetchLikes()
   useEffect(() => {
     if (!user) {
       let usr = Date.now();
-      localStorage.setItem('uusr', usr);
+      localStorage.setItem('fuser', usr);
       fetch("https://calm-journey-09295.herokuapp.com/users", {
         method: "POST",
         headers: {
@@ -34,6 +42,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setPoems(data);
+
       });
       // fetchLiked()
       // fetchCollection()
@@ -58,6 +67,7 @@ function App() {
   function addToLiked(id) {
     //patch to user where user = user
     //add title to liked
+    console.log(id)
     fetch(`https://calm-journey-09295.herokuapp.com/users/${user}`, {
       method: 'PATCH',
       headers: {
@@ -71,6 +81,30 @@ function App() {
     .then(()=>setLikes([...likes,id]))
 
   }
+  function handleAdd(e) {
+    e.preventDefault();
+    const newPoem = {
+      title: e.target.title.value,
+      content: e.target.content.value,
+      poet: {
+        name: e.target.name.value,
+      }
+    }
+    fetch("https://calm-journey-09295.herokuapp.com/poems", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPoem),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPoems([...poems, data]);
+      });
+  }
+
+  const likedPoems = poems.filter(poem=>likes.includes(poem.id))
+  console.log(likedPoems)
 
   return (
     <div className="App">
@@ -80,7 +114,7 @@ function App() {
         <Routes>
           <Route path="/personal" element={<h1>personal</h1>} />
           <Route path="/liked" element={<h1>liked</h1>} />
-          <Route path="/create" element={<h1>create</h1>} />
+          <Route path="/create" element={<Create handleAdd={handleAdd}/>} />
           <Route path="/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes}/>} />
         </Routes>
       </BrowserRouter>
