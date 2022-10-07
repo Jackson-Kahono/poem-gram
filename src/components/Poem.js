@@ -2,18 +2,18 @@ import { AiFillFileAdd } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 
 
-function Likee({ addToCollection, addToLiked, title,liked }) {
+function Likee({ addToCollection, addToLiked, id,liked }) {
       return (
             <>
                   <div class='likes'>
                         <AiFillFileAdd
                               style={{ color: '#0b489c', fontSize: '2rem', cursor: 'pointer' }}
-                              onClick={() => addToCollection(title)}
+                              onClick={() => addToCollection(id)}
 
                         />
                         <AiFillHeart
                               style={{ color: `${ liked? 'red':'black'}`, fontSize: '2rem', cursor: 'pointer' }}
-                              onClick={() => addToLiked(title)}
+                              onClick={() => addToLiked(id)}
                         />
 
 
@@ -32,7 +32,7 @@ function Poem({ poem, addToCollection, addToLiked,view=false }) {
       }
 
       const preview = poem.content.split("\n").slice(0, 6)
-      
+
       return (
             <div className="poem">
                   <div className="prev">
