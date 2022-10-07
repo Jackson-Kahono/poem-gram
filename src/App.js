@@ -40,7 +40,7 @@ function App() {
           let poem = poems.filter((item) => item.id === collections[i].poem_id);
           setCollection(...collection, poem);
         }
-  }
+  })
 }
 
   useEffect(() => {
