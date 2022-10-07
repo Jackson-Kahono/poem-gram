@@ -1,12 +1,9 @@
 body{
   background-color: #bcd5f8;
-  display: flex;
-  justify-content: center;
 
 }
 
 .App {
-  width:100%;
   margin-top:-1.5rem;
   background-color: white;
   height: 100vh;
@@ -80,8 +77,15 @@ body{
   display: flex;
   justify-content: space-between;
 }
-@media (max-width: 1290px) {
+.Create{
+  width:40%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* @media (max-width: 1290px) {
   .App {
     width: 1280px;
   }
-}
+} */

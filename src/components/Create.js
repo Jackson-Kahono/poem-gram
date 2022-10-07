@@ -1,12 +1,14 @@
 function Create({ handleAdd }) {
       return (
-            <div className="Create">
+            <div>
                   <h1>Create</h1>
                   <form onSubmit={handleAdd}>
-                        <input type="text" name="title" placeholder="Title" />
-                        <textarea name="content" placeholder="Content" />
-                        <input name="poet" placeholder="Poet" />
-                        <button type="submit">Add</button>
+                        <div className="Create">
+                              <input type="text" name="title" placeholder="Title" /><br/><br/>
+                              <textarea name="content" placeholder="Content" cols={30} rows={30} /><br/><br/>
+                              <input name="poet" placeholder="Poet" /><br/><br/>
+                              <button type="submit">Add</button>
+                        </div>
                   </form>
             </div>
 
