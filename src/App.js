@@ -19,10 +19,7 @@ function App() {
     fetch(`https://calm-journey-09256.herokuapp.com/users/${user}`)
       .then(res => res.json())
       .then(data => {
-        data.liked.map((item) => {
-          let likedPoems = poems.filter((poem) => poem.id === item)
-          setLiked(...liked, likedPoems)
-        })
+        console.log(data)
       })
   }
 
