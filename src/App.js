@@ -68,6 +68,7 @@ function App() {
         setPoems(data);
       });
       fetchLiked()
+      fetchCollection()
 
 
   }, [user]);
