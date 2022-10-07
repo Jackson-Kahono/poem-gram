@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   const [poems, setPoems] = useState([]);
   const [liked, setLiked] = useState([]);
+  const[likes,setLikes]=useState([]);
   const [collection, setCollection] = useState([]);
 
   const [user, setUser] = useState(localStorage.getItem('uusr') || null);
@@ -20,6 +21,7 @@ function App() {
       .then(res => res.json())
       .then(data => {
         console.log(data)
+        setLikes([...data.liked])
       })
   }
 
@@ -76,7 +78,7 @@ function App() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        collection: [id]
+        collection:[...collection,id]
       })
     })
 
@@ -91,9 +93,11 @@ function App() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        liked: [id]
+        liked: [...likes, id]
       })
     })
+    .then(res=>res.json())
+    .then(()=>setLikes([...likes,id]))
 
   }
 
