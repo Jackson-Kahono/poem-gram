@@ -150,10 +150,10 @@ function App() {
       <BrowserRouter>
         <Nav />
         <Routes>
-          <Route path="poem-gram/personal" element={<Collection poems={collectionPoems} />} />
-          <Route path="poem-gram/liked" element={<Like poems={likedPoems} />} />
-          <Route path="poem-gram/create" element={<Create handleAdd={handleAdd} />} />
-          <Route path="poem-gram/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes} />} />
+          <Route path="/poem-gram/personal" element={<Collection poems={collectionPoems} />} />
+          <Route path="/poem-gram/liked" element={<Like poems={likedPoems} />} />
+          <Route path="/poem-gram/create" element={<Create handleAdd={handleAdd} />} />
+          <Route path="/poem-gram/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes} />} />
         </Routes>
       </BrowserRouter>
     </div>
