@@ -3,27 +3,46 @@ import { useState, useEffect } from 'react';
 import Nav from "./components/Nav";
 import Home from './components/Home';
 import Create from './components/Create';
+import Collection from './components/Collection';
+import Like from './components/Like';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   const [poems, setPoems] = useState([]);
 
-  const[likes,setLikes]=useState([]);
+  const [likes, setLikes] = useState([]);
+  const [collection, setCollection] = useState([]);
+
 
 
   const [user, setUser] = useState(localStorage.getItem('fuser') || null);
 
   const fetchLikes = async () => {
-    const res = await fetch('https://calm-journey-09295.herokuapp.com/users/'+user);
+    const res = await fetch('https://calm-journey-09295.herokuapp.com/users/' + user);
     const data = await res.json();
     console.log(...data.liked)
-    setLikes([...likes,...data.liked])
+    setLikes([...likes, ...data.liked])
 
   }
+
   // useCallback(fetchLikes,[likes]);
   useEffect(() => {
     fetchLikes();
-  },[]);
+  }, []);
+  const fetchCollection = async () => {
+    const res = await fetch('https://calm-journey-09295.herokuapp.com/users/' + user);
+    const data = await res.json();
+    if (data.collection) {
+      setCollection([...collection, ...data.collection])
+    }
+
+
+  }
+
+  // useCallback(fetchCollection,[collection]);
+  useEffect(() => {
+    fetchCollection();
+  }, []);
 
   useEffect(() => {
     if (!user) {
@@ -50,24 +69,24 @@ function App() {
         setPoems(data);
 
       });
-      // fetchLiked()
-      // fetchCollection()
+    // fetchLiked()
+    // fetchCollection()
 
 
   }, []);
   function addToCollection(id) {
-    //patch to user where user = user
-    //add title to collection
-    fetch(`https://calm-journey-09295.herokuapp.com/users/${user}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        collection:[id]
+    if (!collection.includes(id)) {
+      fetch(`https://calm-journey-09295.herokuapp.com/users/${user}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          collection: [...collection, id]
+        })
       })
-    })
 
+    }
   }
 
   function addToLiked(id) {
@@ -75,12 +94,12 @@ function App() {
     //add title to liked
     console.log(id)
     let totalLikes = likes;
-    if(likes.includes(id)){
+    if (likes.includes(id)) {
       //unlike
-      totalLikes = likes.filter((item)=>item!==id)
-    }else{
+      totalLikes = likes.filter((item) => item !== id)
+    } else {
       //like
-      totalLikes = [...likes,id]
+      totalLikes = [...likes, id]
     }
 
     fetch(`https://calm-journey-09295.herokuapp.com/users/${user}`, {
@@ -92,10 +111,10 @@ function App() {
         liked: totalLikes
       })
     })
-    .then(res=>res.json())
-    .then(()=>{
-      setLikes(totalLikes)
-    })
+      .then(res => res.json())
+      .then(() => {
+        setLikes(totalLikes)
+      })
 
   }
   function handleAdd(e) {
@@ -120,7 +139,7 @@ function App() {
       });
   }
   console.log(likes)
-  const likedPoems = poems.filter(poem=>likes.includes(poem.id))
+  const likedPoems = poems.filter(poem => likes.includes(poem.id))
   // console.log(likes)
 
   return (
@@ -129,10 +148,10 @@ function App() {
       <BrowserRouter>
         <Nav />
         <Routes>
-          <Route path="/personal" element={<h1>personal</h1>} />
-          <Route path="/liked" element={<h1>liked</h1>} />
-          <Route path="/create" element={<Create handleAdd={handleAdd}/>} />
-          <Route path="/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes}/>} />
+          <Route path="/personal" element={<Collection poems={collection} />} />
+          <Route path="/liked" element={<Like poems={likedPoems} />} />
+          <Route path="/create" element={<Create handleAdd={handleAdd} />} />
+          <Route path="/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes} />} />
         </Routes>
       </BrowserRouter>
     </div>

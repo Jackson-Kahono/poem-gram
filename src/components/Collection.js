@@ -1,14 +1,15 @@
 import Poem from "./Poem";
 
-function Like({poems}){
+function Collection({poems}){
       return (
             <div className="Poems">
                   {poems.map((poem) => (
-                        <Poem key={poem.id} poem={poem} view={true}/>
+                        <Poem key={poem.id} poem={poem} liked={true}/>
                   ))}
             </div>
 
       )
 }
 
-export default Like;
+
+export default Collection;
