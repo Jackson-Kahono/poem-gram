@@ -14,11 +14,17 @@ function App() {
   const [user, setUser] = useState(localStorage.getItem('fuser') || null);
 
   const fetchLikes = async () => {
-    const res = await fetch('https://calm-journey-09295.herokuapp.com/users');
+    const res = await fetch('https://calm-journey-09295.herokuapp.com/users/'+user);
     const data = await res.json();
-    setLikes([...data.liked]);
+    console.log(...data.liked)
+    setLikes([...likes,...data.liked])
+
   }
-  fetchLikes()
+  // useCallback(fetchLikes,[likes]);
+  useEffect(() => {
+    fetchLikes();
+  },[]);
+
   useEffect(() => {
     if (!user) {
       let usr = Date.now();
@@ -48,7 +54,7 @@ function App() {
       // fetchCollection()
 
 
-  }, [user]);
+  }, []);
   function addToCollection(id) {
     //patch to user where user = user
     //add title to collection
@@ -68,17 +74,28 @@ function App() {
     //patch to user where user = user
     //add title to liked
     console.log(id)
+    let totalLikes = likes;
+    if(likes.includes(id)){
+      //unlike
+      totalLikes = likes.filter((item)=>item!==id)
+    }else{
+      //like
+      totalLikes = [...likes,id]
+    }
+
     fetch(`https://calm-journey-09295.herokuapp.com/users/${user}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        liked: [...likes, id]
+        liked: totalLikes
       })
     })
     .then(res=>res.json())
-    .then(()=>setLikes([...likes,id]))
+    .then(()=>{
+      setLikes(totalLikes)
+    })
 
   }
   function handleAdd(e) {
@@ -102,9 +119,9 @@ function App() {
         setPoems([...poems, data]);
       });
   }
-
+  console.log(likes)
   const likedPoems = poems.filter(poem=>likes.includes(poem.id))
-  console.log(likedPoems)
+  // console.log(likes)
 
   return (
     <div className="App">
