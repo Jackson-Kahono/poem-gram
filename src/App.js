@@ -20,8 +20,9 @@ function App() {
   const fetchLikes = async () => {
     const res = await fetch('https://calm-journey-09295.herokuapp.com/users/' + user);
     const data = await res.json();
-    console.log(...data.liked)
-    setLikes([...likes, ...data.liked])
+    if (data.likes) {
+      setLikes([...likes, ...data.liked])
+    }
 
   }
 
@@ -140,6 +141,7 @@ function App() {
   }
   console.log(likes)
   const likedPoems = poems.filter(poem => likes.includes(poem.id))
+  const collectionPoems = poems.filter(poem => collection.includes(poem.id))
   // console.log(likes)
 
   return (
@@ -148,7 +150,7 @@ function App() {
       <BrowserRouter>
         <Nav />
         <Routes>
-          <Route path="/personal" element={<Collection poems={collection} />} />
+          <Route path="/personal" element={<Collection poems={collectionPoems} />} />
           <Route path="/liked" element={<Like poems={likedPoems} />} />
           <Route path="/create" element={<Create handleAdd={handleAdd} />} />
           <Route path="/" element={<Home poems={poems} addToCollection={addToCollection} addToLiked={addToLiked} likes={likes} />} />
